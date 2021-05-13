@@ -196,7 +196,7 @@ class product {
     var listProducts = this.listProduct();
     listProducts.forEach(function (value) {
       if (
-        Date.parse(value.getSaleDate()) == Date.parse(dateTime) &&
+        Date.parse(value.getSaleDate()) > Date.parse(dateTime) &&
         value.getQuanlity() > 0
       ) {
         var temp = [];
