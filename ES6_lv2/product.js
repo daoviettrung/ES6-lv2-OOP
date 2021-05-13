@@ -1,4 +1,5 @@
 class product {
+
   constructor(id, name, categoryId, saleDate, quanlity, isDelete) {
     this.id = id;
     this.name = name;
