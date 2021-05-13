@@ -95,7 +95,7 @@ class product {
     for (var i = 0; i < size; i++) {
       if (
         listProducts[i].getQuanlity() > 0 &&
-        listProducts.getIsDelete == false
+        listProducts.getIsDelete != false
       ) {
         listQuanlity.push(listProducts[i]);
       }
@@ -117,7 +117,7 @@ class product {
     for (var i = 0; i < size; i++) {
       if (
         Date.parse(listProducts[i].getSaleDate()) > Date.parse(dateTime) &&
-        listProducts.getIsDelete == false
+        listProducts.getIsDelete != false
       ) {
         listSaleDate.push(listProducts[i]);
       }
@@ -141,7 +141,7 @@ class product {
     var size = this.listProduct().length;
     var listProducts = this.listProduct();
     for (var i = 0; i < size; i++) {
-      if (listProducts[i].getIsDelete == false) {
+      if (listProducts[i].getIsDelete != false) {
         total = total + listProducts[i].getQuanlity();
       }
     }
