@@ -61,37 +61,30 @@ class product {
     var d = new Date();
     var listProduct = [];
     for (var i = 0; i < 10; i++) {
-      listProduct.push(new product(i, "Trung" + i, "cate" + i, d, i + 8, 0));
+      listProduct.push(new product(i, "Trung" + i, "cate" + i, d, i + 8, true));
     }
     return listProduct;
   }
 
-  findProductById(idProduct) {
-    var value;
-    if (idProduct > this.listProduct.length) {
-      value = "Number not available";
-      return value;
-    }
-    var listProducts = this.listProduct();
-    var size = idProduct - 1;
+  findProductById(idProduct, listProducts) {
+    var nameProduct;
+    var size = listProducts.length;
     for (var i = 0; i <= size; i++) {
       if (listProducts[i].getId() == idProduct) {
-        value = listProducts[i].getName();
+        nameProduct = listProducts[i].getName();
         break;
       }
     }
-    return value;
-  }
-
-  findProductByIdWay2(idProduct) {
-    var nameProduct = this.listProduct().find((x) => x.getId() == idProduct);
     return nameProduct;
   }
 
-  checkQuanlity() {
+  findProductByIdWay2(idProduct) {
+    return this.listProduct().find((product) => product.getId() == idProduct);
+  }
+
+  checkQuanlity(listProducts) {
     var listQuanlity = [];
-    var listProducts = this.listProduct();
-    var size = this.listProduct().length;
+    var size = listProducts.length;
     for (var i = 0; i < size; i++) {
       if (
         listProducts[i].getQuanlity() > 0 &&
@@ -103,17 +96,14 @@ class product {
     return listQuanlity;
   }
 
-  checkQuanlityWay2() {
-    var listQuanlity = [];
-    listQuanlity.push(this.listProduct().filter((x) => x.getQuanlity() > 0));
-    return listQuanlity;
+  checkQuanlityWay2(listProducts) {
+    return (listProducts.filter((quanlity) => quanlity.getQuanlity() > 0));
   }
 
-  checkSaleDate() {
+  checkSaleDate(listProducts) {
     var dateTime = new Date();
     var listSaleDate = [];
-    var listProducts = this.listProduct();
-    var size = this.listProduct().length;
+    var size = listProducts.length;
     for (var i = 0; i < size; i++) {
       if (
         Date.parse(listProducts[i].getSaleDate()) > Date.parse(dateTime) &&
@@ -125,21 +115,18 @@ class product {
     return listSaleDate;
   }
 
-  checkSaleDateWay2() {
+  checkSaleDateWay2(listProducts) {
     var dateTime = new Date();
-    var listSaleDate = [];
-    listSaleDate.push(
+    return (
       Date.parse(
-        this.listProduct().filter((x) => x.getSaleDate()) > Date.parse(dateTime)
+        listProducts.filter((saleDate) => saleDate.getSaleDate()) == Date.parse(dateTime)
       )
     );
-    return listSaleDate;
   }
 
-  totalProduct() {
+  totalProduct(listProducts) {
     var total = 0;
-    var size = this.listProduct().length;
-    var listProducts = this.listProduct();
+    var size = listProducts.length;
     for (var i = 0; i < size; i++) {
       if (listProducts[i].getIsDelete != false) {
         total = total + listProducts[i].getQuanlity();
@@ -148,35 +135,33 @@ class product {
     return total;
   }
 
-  totalProductWay2() {
-    var listProducts = this.listProduct();
+  totalProductWay2(listProducts) {
     const total = listProducts.reduce((accumulator, item) => {
       return (accumulator += item.getQuanlity());
     }, 0);
     return total;
   }
 
-  isHaveProductInCategory(categoryId) {
-    var size = this.listProduct().length;
-    var listProducts = this.listProduct();
+  isHaveProductInCategory(categoryId, listProducts) {
+    var size = listProducts.length;
     for (var i = 0; i < size; i++) {
       if (listProducts[i].getCategoryId() == categoryId) {
         return true;
-        break;
       }
     }
   }
 
-  isHaveProductInCategoryWay2(categoryId) {
-    var check = this.listProduct().find((x) => x.getCategoryId() == categoryId);
-    return check != null ? true : false;
+  isHaveProductInCategoryWay2(categoryId, listProducts) {
+    var check = listProducts.find((cate) => cate.getCategoryId() == categoryId);
+    if(check != null){
+      return true;
+    }
   }
 
-  filterProductBySaleDate() {
+  filterProductBySaleDate(listProducts) {
     var dateTime = new Date();
-    var list = [];
-    var listProducts = this.listProduct();
-    var size = this.listProduct().length;
+    var listProductBySaleDate = [];
+    var size = listProducts.length;
     for (var i = 0; i < size; i++) {
       if (
         Date.parse(listProducts[i].getSaleDate()) > Date.parse(dateTime) &&
@@ -185,16 +170,15 @@ class product {
         var temp = [];
         temp.push(listProducts[i].getId());
         temp.push(listProducts[i].getName());
-        list.push(temp);
+        listProductBySaleDate.push(temp);
       }
     }
-    return list;
+    return listProductBySaleDate;
   }
 
-  filterProductBySaleDateWay2() {
+  filterProductBySaleDateWay2(listProducts) {
     var dateTime = new Date();
-    var list = [];
-    var listProducts = this.listProduct();
+    var listProductBySaleDate = [];
     listProducts.forEach(function (value) {
       if (
         Date.parse(value.getSaleDate()) > Date.parse(dateTime) &&
@@ -203,9 +187,10 @@ class product {
         var temp = [];
         temp.push(value.getId());
         temp.push(value.getName());
-        list.push(temp);
+        listProductBySaleDate.push(temp);
       }
     });
-    return list;
+    return listProductBySaleDate;
   }
 }
+
